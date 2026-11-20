@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
@@ -7,11 +6,12 @@ class AppTheme {
   AppTheme._();
 
   static ThemeData get lightTheme {
-    final baseTextTheme = GoogleFonts.poppinsTextTheme();
+    final baseTextTheme = ThemeData.light().textTheme;
 
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      fontFamily: 'Poppins',
 
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.background,
@@ -24,6 +24,7 @@ class AppTheme {
       ),
 
       textTheme: baseTextTheme.apply(
+        fontFamily: 'Poppins',
         bodyColor: AppColors.textPrimary,
         displayColor: AppColors.textPrimary,
       ),
@@ -45,7 +46,8 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
-          textStyle: GoogleFonts.poppins(
+          textStyle: const TextStyle(
+            fontFamily: 'Poppins',
             fontSize: 15,
             fontWeight: FontWeight.w700,
           ),
@@ -61,12 +63,14 @@ class AppTheme {
           vertical: 15,
         ),
 
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: const TextStyle(
+          fontFamily: 'Poppins',
           fontSize: 13,
           color: AppColors.textHint,
         ),
 
-        labelStyle: GoogleFonts.poppins(
+        labelStyle: const TextStyle(
+          fontFamily: 'Poppins',
           fontSize: 13,
           color: AppColors.textSecondary,
         ),
@@ -113,8 +117,7 @@ class AppTheme {
 
       dividerColor: AppColors.border,
 
-      progressIndicatorTheme:
-          const ProgressIndicatorThemeData(
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.primary,
       ),
     );
