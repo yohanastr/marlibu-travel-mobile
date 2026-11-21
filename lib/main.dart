@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/auth_provider.dart';
 
 // Halaman bagian Splash & Auth
 import 'screens/splash/splash_screen.dart';
@@ -39,13 +41,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Marlibu Travel',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFF98845)),
-        useMaterial3: true,
-      ),
+
+    return MultiProvider(
+      providers: [
+        // Daftarkan AuthProvider di sini
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        
+        // Jika nanti ada provider lain (seperti BookingProvider), tambahkan di bawahnya:
+        // ChangeNotifierProvider(create: (_) => BookingProvider()),
+      ],
+
+    child: MaterialApp(
+        title: 'Marlibu Travel',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFF98845)),
+          useMaterial3: true,
+        ),
+     
       // Aplikasi dimulai dari SplashScreen
       home: const SplashScreen(),
       routes: {
@@ -80,6 +93,7 @@ class MyApp extends StatelessWidget {
         '/ajukan-refund': (context) => const AjukanRefundScreen(),
         '/logout': (context) => const LogoutScreen(),
       },
+    ),
     );
   }
 }
