@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'notifikasi_screen.dart';
 import 'private_trip_screen.dart';
 import 'ai_assistant_screen.dart';
 import '../booking/cari_travel_screen.dart';
+import '../history/riwayat_booking_screen.dart';
+import '../profile/profile_screen.dart';
+import '../profile/pengaturan_screen.dart';
+import '../profile/pusat_bantuan_screen.dart';
+import '../profile/tentang_kami_screen.dart';
+import '../profile/ajukan_refund_screen.dart';
+import '../profile/logout_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,48 +69,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: Colors.white,
       endDrawer: _buildSubmenuDrawer(),
+      bottomNavigationBar: _buildBottomNavBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. HEADER ATAS (Logo Marlibu Biru di Kiri + Lonceng & Menu di Kanan)
+              // 1. HEADER ATAS (Logo Marlibu dari Assets di Kiri + Lonceng & Menu di Kanan)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF0066B2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.directions_car_filled_rounded,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        SizedBox(height: 2),
-                        Text(
-                          'Marlibu',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                            height: 1.1,
-                          ),
-                        ),
-                      ],
-                    ),
+                  Image.asset(
+                    'assets/images/marlibu_logo.png',
+                    height: 60,
+                    fit: BoxFit.contain,
                   ),
                   Row(
                     children: [
@@ -117,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         icon: const Icon(
                           Icons.notifications_none_rounded,
-                          color: Color(0xFF1E293B),
+                          color: Colors.black87,
                           size: 26,
                         ),
                       ),
@@ -126,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             _scaffoldKey.currentState?.openEndDrawer(),
                         icon: const Icon(
                           Icons.menu_rounded,
-                          color: Color(0xFF0F172A),
+                          color: Colors.black87,
                           size: 30,
                         ),
                       ),
@@ -141,13 +124,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 18),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
-                  boxShadow: const [
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: Colors.grey.shade400, width: 1.0),
+                  boxShadow: [
                     BoxShadow(
-                      color: Color(0x0F000000),
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
                     ),
                   ],
                 ),
@@ -157,13 +140,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Tujuan Keberangkatan',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF0066B2),
+                          style: GoogleFonts.poppins(
+                            fontSize: 13.5,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF0077CC),
                           ),
                         ),
                         if (_kotaAsal != null ||
@@ -177,13 +159,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 _tanggalBerangkat = null;
                               });
                             },
-                            child: const Text(
+                            child: Text(
                               'Reset',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 10.5,
+                              style: GoogleFonts.poppins(
+                                fontSize: 11,
                                 fontWeight: FontWeight.w600,
-                                color: Color(0xFFFF7A00),
+                                color: const Color(0xFFFF852D),
                               ),
                             ),
                           ),
@@ -192,13 +173,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 10),
 
                     // Label & Dropdown Keberangkatan
-                    const Text(
+                    Text(
                       'Keberangkatan',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 11,
+                      style: GoogleFonts.poppins(
+                        fontSize: 11.5,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF334155),
+                        color: Colors.black87,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -207,16 +187,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       value: _kotaAsal,
                       onChanged: (val) => setState(() => _kotaAsal = val),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 10),
 
                     // Label & Dropdown Kedatangan
-                    const Text(
+                    Text(
                       'Kedatangan',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 11,
+                      style: GoogleFonts.poppins(
+                        fontSize: 11.5,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF334155),
+                        color: Colors.black87,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -225,60 +204,62 @@ class _HomeScreenState extends State<HomeScreen> {
                       value: _kotaTujuan,
                       onChanged: (val) => setState(() => _kotaTujuan = val),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 10),
 
                     // Label & Picker Tanggal Keberangkatan
-                    const Text(
+                    Text(
                       'Tanggal Keberangkatan',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 11,
+                      style: GoogleFonts.poppins(
+                        fontSize: 11.5,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF334155),
+                        color: Colors.black87,
                       ),
                     ),
                     const SizedBox(height: 4),
                     InkWell(
                       onTap: _pilihTanggal,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                       child: Container(
-                        height: 36,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        height: 40,
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE6EEF6),
-                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xFFEBF3FC),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Colors.grey.shade400,
+                            width: 1.0,
+                          ),
                         ),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.calendar_month_outlined,
                               size: 16,
-                              color: Color(0xFF475569),
+                              color: Colors.grey.shade700,
                             ),
                             const SizedBox(width: 8),
                             Text(
                               _tanggalBerangkat == null
                                   ? 'Pilih tanggal'
                                   : _formatTanggal(_tanggalBerangkat!),
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 11,
+                              style: GoogleFonts.poppins(
+                                fontSize: 11.5,
                                 color: _tanggalBerangkat == null
-                                    ? const Color(0xFF64748B)
-                                    : const Color(0xFF0F172A),
+                                    ? Colors.grey.shade600
+                                    : Colors.black87,
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 16),
 
-                    // Tombol Oranye "Cari Keberangkatan" diarahkan ke CariTravelScreen
+                    // Tombol Oranye "Cari Keberangkatan"
                     Center(
                       child: SizedBox(
-                        width: 190,
-                        height: 34,
+                        width: 200,
+                        height: 38,
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -289,20 +270,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFFF7A00),
-                            foregroundColor: const Color(0xFF0F172A),
+                            backgroundColor: const Color(0xFFFF852D),
+                            foregroundColor: Colors.white,
                             elevation: 2,
-                            shadowColor: Colors.black26,
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            shadowColor:
+                                const Color(0xFFFF852D).withOpacity(0.35),
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Cari Keberangkatan',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 11,
+                            style: GoogleFonts.poppins(
+                              fontSize: 11.5,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -312,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 18),
 
               // 3. BANNER PROMO (Promo Weekend! & Promo Tahun Baru!)
               _buildPromoCard(
@@ -324,16 +305,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'Promo Tahun Baru!',
                 subtitle: 'Diskon 50% semua rute · Kode: NEWYEAR',
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 18),
 
               // 4. SECTION LAYANAN (Private Trip & AI Assistant)
-              const Text(
+              Text(
                 'Layanan',
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+                style: GoogleFonts.poppins(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
                 ),
               ),
               const SizedBox(height: 10),
@@ -370,6 +350,147 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // BOTTOM NAVIGATION BAR (Riwayat Booking, Home, Profile)
+  Widget _buildBottomNavBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(color: Colors.grey.shade200, width: 1.0),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Tab 1: Riwayat Booking
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const RiwayatBookingScreen(),
+                      ),
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.assignment_outlined,
+                          color: Color(0xFF0077CC),
+                          size: 22,
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          'Riwayat Booking',
+                          style: GoogleFonts.poppins(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // Tab 2: Home (Aktif - Kotak Biru)
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF0077CC),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF0077CC).withOpacity(0.25),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.home_outlined,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Home',
+                        style: GoogleFonts.poppins(
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Tab 3: Profile
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ProfileScreen(),
+                      ),
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.account_circle_outlined,
+                          color: Color(0xFF0077CC),
+                          size: 22,
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          'Profile',
+                          style: GoogleFonts.poppins(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -383,35 +504,40 @@ class _HomeScreenState extends State<HomeScreen> {
     required ValueChanged<String?> onChanged,
   }) {
     return Container(
-      height: 36,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      height: 40,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFE6EEF6),
-        borderRadius: BorderRadius.circular(8),
+        color: const Color(0xFFEBF3FC),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade400, width: 1.0),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           isExpanded: true,
           value: value,
+          dropdownColor: Colors.white,
+          borderRadius: BorderRadius.circular(12),
           hint: Text(
             hint,
-            style: const TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 11,
-              color: Color(0xFF475569),
+            style: GoogleFonts.poppins(
+              fontSize: 11.5,
+              color: Colors.grey.shade600,
             ),
           ),
-          icon: const Icon(
+          icon: Icon(
             Icons.keyboard_arrow_down_rounded,
-            size: 18,
-            color: Color(0xFF475569),
+            size: 20,
+            color: Colors.grey.shade700,
           ),
           items: _daftarKota.map((kota) {
             return DropdownMenuItem<String>(
               value: kota,
               child: Text(
                 kota,
-                style: const TextStyle(fontFamily: 'Poppins', fontSize: 11),
+                style: GoogleFonts.poppins(
+                  fontSize: 11.5,
+                  color: Colors.black87,
+                ),
               ),
             );
           }).toList(),
@@ -426,13 +552,17 @@ class _HomeScreenState extends State<HomeScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFFEBF3FA),
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: const [
+        color: const Color(0xFFEBF3FC),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: const Color(0xFF0077CC).withOpacity(0.20),
+          width: 1.0,
+        ),
+        boxShadow: [
           BoxShadow(
-            color: Color(0x0D000000),
-            blurRadius: 6,
-            offset: Offset(0, 3),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -441,20 +571,18 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF0066B2),
+            style: GoogleFonts.poppins(
+              fontSize: 13.5,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xFF0077CC),
             ),
           ),
           const SizedBox(height: 4),
           Text(
             subtitle,
-            style: const TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 11,
-              color: Color(0xFF334155),
+            style: GoogleFonts.poppins(
+              fontSize: 11.5,
+              color: Colors.grey.shade700,
             ),
           ),
         ],
@@ -469,32 +597,31 @@ class _HomeScreenState extends State<HomeScreen> {
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(18),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
-          boxShadow: const [
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: Colors.grey.shade400, width: 1.0),
+          boxShadow: [
             BoxShadow(
-              color: Color(0x0D000000),
-              blurRadius: 8,
-              offset: Offset(0, 3),
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
         child: Column(
           children: [
-            Icon(icon, color: const Color(0xFFFF7A00), size: 36),
+            Icon(icon, color: const Color(0xFFFF852D), size: 36),
             const SizedBox(height: 6),
             Text(
               title,
-              style: const TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF38BDF8),
+              style: GoogleFonts.poppins(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xFF0077CC),
               ),
             ),
           ],
@@ -503,7 +630,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // SUBMENU DRAWER BIRU KANAN ATAS (Sesuai Frame "Submenu" di Figma)
+  // SUBMENU DRAWER BIRU KANAN ATAS (Terhubung ke Halaman Profile & LogoutScreen)
   Widget _buildSubmenuDrawer() {
     final List<String> menuItems = [
       'Pengaturan',
@@ -520,10 +647,10 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.only(top: 10),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
         decoration: const BoxDecoration(
-          color: Color(0xFF0066B2),
+          color: Color(0xFF0077CC),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            bottomLeft: Radius.circular(16),
+            topLeft: Radius.circular(18),
+            bottomLeft: Radius.circular(18),
           ),
           boxShadow: [
             BoxShadow(
@@ -542,28 +669,67 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(bottom: 12),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 36,
+                  height: 38,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Membuka $item')),
-                      );
+
+                      switch (item) {
+                        case 'Pengaturan':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const PengaturanScreen(),
+                            ),
+                          );
+                          break;
+                        case 'Pusat Bantuan':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const PusatBantuanScreen(),
+                            ),
+                          );
+                          break;
+                        case 'Tentang Kami':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const TentangKamiScreen(),
+                            ),
+                          );
+                          break;
+                        case 'Ajukan Refund':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const AjukanRefundScreen(),
+                            ),
+                          );
+                          break;
+                        case 'Logout':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const LogoutScreen(),
+                            ),
+                          );
+                          break;
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      foregroundColor: const Color(0xFF0066B2),
+                      foregroundColor: const Color(0xFF0077CC),
                       elevation: 1,
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: Text(
                       item,
-                      style: const TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 11,
+                      style: GoogleFonts.poppins(
+                        fontSize: 11.5,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
